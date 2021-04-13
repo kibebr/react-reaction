@@ -9,5 +9,13 @@ describe('Utils - String', () => {
 
       expect(result).toBe(false)
     })
+
+    it('should return true for alphanumeric string', () => {
+      const str = 'alphanumeric123'
+
+      const result = isAlphanumeric(str)
+
+      expect(result).toBe(true)
+    })
   })
 })
