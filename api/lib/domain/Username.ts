@@ -4,9 +4,12 @@ import { iso, Newtype } from 'newtype-ts'
 
 export interface Username extends Newtype<{ readonly Username: unique symbol }, string> {}
 
-const usernameIso = iso<Username>()
+export const usernameIso = iso<Username>()
 
-type DomainError
+export const MIN_CHARS = 3
+export const MAX_CHARS = 15
+
+export type DomainError
   = 'UsernameNotAlpha'
   | 'UsernameTooLong'
   | 'UsernameTooShort'
@@ -14,9 +17,9 @@ type DomainError
 export const parseUsername = (u: string): Either<DomainError, Username> => {
   if (!isAlphanumeric(u)) {
     return left('UsernameNotAlpha')
-  } else if (u.length > 15) {
+  } else if (u.length > MAX_CHARS) {
     return left('UsernameTooLong')
-  } else if (u.length <= 0) {
+  } else if (u.length <= MIN_CHARS) {
     return left('UsernameTooShort')
   } else {
     return right(usernameIso.wrap(u))
