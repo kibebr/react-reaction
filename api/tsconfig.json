@@ -11,7 +11,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
 
-    "strict": true /* Enable all strict type-checking options. */,
+    "strict": true,
 
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -20,24 +20,18 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
 
-    /* Additional Checks */
-    "noUnusedLocals": true /* Report errors on unused locals. */,
-    "noUnusedParameters": true /* Report errors on unused parameters. */,
-    "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
-    "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
 
-    /* Debugging Options */
-    "traceResolution": false /* Report module resolution log messages. */,
-    "listEmittedFiles": false /* Print names of generated files part of the compilation. */,
-    "listFiles": false /* Print names of files part of the compilation. */,
-    "pretty": true /* Stylize errors and messages using color and context. */,
-
-    /* Experimental Options */
-    // "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
-    // "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
+    "traceResolution": false,
+    "listEmittedFiles": false,
+    "listFiles": false,
+    "pretty": true,
 
     "lib": ["es2017", "dom"],
-    "types": ["node"],
+    "types": ["node", "jest"],
     "typeRoots": ["node_modules/@types", "src/types"]
   },
   "include": ["lib/**/*.ts", "test/**/*.ts"],
