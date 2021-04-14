@@ -32,7 +32,8 @@ const App = (): JSX.Element => {
 
   useEffect((): void => {
     if (times.length > 0) {
-      setAverage(getAverage(times))
+      // | 0 is used to remove decimal places
+      setAverage(getAverage(times) | 0)
       setFastestTime(Math.min(...times))
     }
   }, [times])
