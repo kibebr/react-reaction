@@ -10,6 +10,7 @@ import {
   getAverage
 } from './utils/Math'
 import { getRandomFromRange } from './utils/Random'
+import { getLastElement } from './utils/Array'
 import { generateId } from './utils/Id'
 import classNames from 'classnames'
 import './index.css'
@@ -77,7 +78,9 @@ const App = (): JSX.Element => {
     } else if (state === 'PAUSED') {
       return (
         <>
-          <span>{offset}ms or {millisecondsToSeconds(offset)} seconds</span>
+          {times.length > 0 && (
+            <span>{getLastElement(times)}ms or {millisecondsToSeconds(getLastElement(times))} seconds</span>
+          )}
           <span className='text-xl'>Press to start again.</span>
         </>
       )
