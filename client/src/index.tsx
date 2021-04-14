@@ -12,6 +12,7 @@ import {
 import { getRandomFromRange } from './utils/Random'
 import { getLastElement } from './utils/Array'
 import { generateId } from './utils/Id'
+import { Header } from './components/Header'
 import classNames from 'classnames'
 import './index.css'
 
@@ -103,9 +104,7 @@ const App = (): JSX.Element => {
         'bg-blue-500': buttonState === 'PAUSED',
         'bg-red-500': buttonState === 'FAILURE'
       })}>
-        <header className='max-w-screen-xl p-4 md:px-0 m-0 m-auto w-full'>
-          <h1 className='text-white font-bold text-3xl md:text-5xl italic'>react-ion ⚡</h1>
-        </header>
+        <Header />
 
         <button
           className='w-full h-96 shadow-lg'
