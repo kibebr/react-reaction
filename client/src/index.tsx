@@ -6,35 +6,36 @@ import React, {
 import { render } from 'react-dom'
 import {
   secondsToMilliseconds,
-  millisecondsToSeconds,
-  getAverage
+  millisecondsToSeconds
 } from './utils/Math'
 import { getRandomFromRange } from './utils/Random'
 import { getLastElement } from './utils/Array'
 import { generateId } from './utils/Id'
 import { Header } from './components/Header'
+import { ADD_TIME } from './reducers/times'
+import { CALCULATE_AVERAGE } from './reducers/average'
+import { CALCULATE_FASTEST_TIME } from './reducers/fastestTime'
+import { ButtonState, WAIT_BUTTON, FAIL_BUTTON, PRESS_BUTTON, PAUSE_BUTTON } from './reducers/buttonState'
+import { INCREMENT_COMBO, RESET_COMBO } from './reducers/combo'
+import { Provider, useDispatch, useSelector } from 'react-redux'
+import { store, IRootState } from './store'
 import classNames from 'classnames'
 import './index.css'
 
-type ButtonState
-  = 'PRESS'
-  | 'PAUSED'
-  | 'FAILURE'
-  | 'WAIT'
-
 const App = (): JSX.Element => {
-  const [buttonState, setButtonState] = useState<ButtonState>('PAUSED')
   const [offset, setOffset] = useState<number>(0)
-  const [fastestTime, setFastestTime] = useState<number>(0)
-  const [average, setAverage] = useState<number>(0)
-  const [times, setTimes] = useState<number[]>([])
-  const [combo, setCombo] = useState<number>(0)
+
+  const times = useSelector((state: IRootState) => state.timesReducer)
+  const fastestTime = useSelector((state: IRootState) => state.fastestTimeReducer)
+  const combo = useSelector((state: IRootState) => state.comboReducer)
+  const average = useSelector((state: IRootState) => state.averageReducer)
+  const buttonState = useSelector((state: IRootState) => state.buttonStateReducer)
+  const dispatch = useDispatch()
 
   useEffect((): void => {
     if (times.length > 0) {
-      // | 0 is used to remove decimal places
-      setAverage(getAverage(times) | 0)
-      setFastestTime(Math.min(...times))
+      dispatch(CALCULATE_AVERAGE(times))
+      dispatch(CALCULATE_FASTEST_TIME(times))
     }
   }, [times])
 
@@ -43,8 +44,8 @@ const App = (): JSX.Element => {
 
     if (buttonState === 'WAIT') {
       timer = window.setTimeout(() => {
-        setButtonState('PRESS')
-      }, secondsToMilliseconds(getRandomFromRange(0, 5)))
+        dispatch(PRESS_BUTTON)
+      }, secondsToMilliseconds(getRandomFromRange(1, 5)))
     }
 
     if (buttonState === 'PRESS') {
@@ -59,18 +60,18 @@ const App = (): JSX.Element => {
   const onButtonClick: MouseEventHandler<HTMLButtonElement> = () => {
     if (buttonState === 'PRESS') {
       const newOffset = offset + Date.now()
-      setTimes(times.concat(newOffset))
+      dispatch(ADD_TIME(newOffset))
       setOffset(newOffset)
-      setButtonState('PAUSED')
-      setCombo((c) => c + 1)
+      dispatch(PAUSE_BUTTON)
+      dispatch(INCREMENT_COMBO)
     } else if (buttonState === 'PAUSED') {
       setOffset(0)
-      setButtonState('WAIT')
+      dispatch(WAIT_BUTTON)
     } else if (buttonState === 'WAIT') {
-      setCombo(0)
-      setButtonState('FAILURE')
+      dispatch(RESET_COMBO)
+      dispatch(FAIL_BUTTON)
     } else {
-      setButtonState('WAIT')
+      dispatch(WAIT_BUTTON)
     }
   }
 
@@ -94,7 +95,7 @@ const App = (): JSX.Element => {
       )
     } else {
       return (
-        <div>Too early.</div>
+        <div>Too early. You lost your combo.</div>
       )
     }
   }
@@ -157,4 +158,9 @@ const App = (): JSX.Element => {
   )
 }
 
-render(<App />, document.getElementById('root'))
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
