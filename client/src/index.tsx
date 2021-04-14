@@ -44,7 +44,7 @@ const App = (): JSX.Element => {
     if (buttonState === 'WAIT') {
       timer = window.setTimeout(() => {
         setButtonState('PRESS')
-      }, secondsToMilliseconds(getRandomFromRange(0, 5)))
+      }, secondsToMilliseconds(getRandomFromRange(1, 5)))
     }
 
     if (buttonState === 'PRESS') {
@@ -122,7 +122,7 @@ const App = (): JSX.Element => {
 
       <div className='my-5' />
 
-      <section className='max-w-screen-xl px-4 md:px-0 m-0 m-auto'>
+      <section className='max-w-screen-xl px-4 md:px-0 m-0 m-auto pb-4'>
         <h2 className='text-3xl font-bold'>Your scores</h2>
 
         <div className='my-3' />
@@ -155,12 +155,6 @@ const App = (): JSX.Element => {
       </section>
 
       <div className='my-5' />
-
-      <section className='px-4 md:px-0 m-0 m-auto max-w-screen-xl'>
-        <h2 className='font-bold text-3xl'>Ranking</h2>
-        <div>
-        </div>
-      </section>
     </div>
   )
 }
