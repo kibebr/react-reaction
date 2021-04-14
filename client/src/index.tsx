@@ -153,14 +153,6 @@ const App = (): JSX.Element => {
         </div>
 
       </section>
-
-      <div className='my-5' />
-
-      <section className='px-4 md:px-0 m-0 m-auto max-w-screen-xl'>
-        <h2 className='font-bold text-3xl'>Ranking</h2>
-        <div>
-        </div>
-      </section>
     </div>
   )
 }
