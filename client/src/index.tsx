@@ -58,7 +58,7 @@ const App = (): JSX.Element => {
 
   return (
     <div className='h-full'>
-      <section className={classNames('flex flex-col h-auto transition-colors duration-75', {
+      <section className={classNames('flex flex-col h-auto', {
         'bg-green-500': buttonState === 'PRESS',
         'bg-yellow-500': buttonState === 'WAIT',
         'bg-blue-500': buttonState === 'PAUSED'
