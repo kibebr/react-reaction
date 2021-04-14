@@ -10,6 +10,7 @@ import {
   getAverage
 } from './utils/Math'
 import { getRandomFromRange } from './utils/Random'
+import { generateId } from './utils/Id'
 import classNames from 'classnames'
 import './index.css'
 
@@ -140,7 +141,7 @@ const App = (): JSX.Element => {
 
           <ul>
             {times.map((time) => (
-              <li>{time}ms</li>
+              <li key={generateId()}>{time}ms</li>
             ))}
           </ul>
         </div>
