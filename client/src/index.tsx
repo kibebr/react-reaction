@@ -1,4 +1,8 @@
-import React, { useState, useEffect, MouseEventHandler } from 'react'
+import React, {
+  useState,
+  useEffect,
+  MouseEventHandler
+} from 'react'
 import { render } from 'react-dom'
 import {
   secondsToMilliseconds,
@@ -53,14 +57,14 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <>
-      <section className={classNames('flex flex-col h-auto', {
+    <div className='h-full'>
+      <section className={classNames('flex flex-col h-auto transition-colors duration-75', {
         'bg-green-500': buttonState === 'PRESS',
         'bg-yellow-500': buttonState === 'WAIT',
         'bg-blue-500': buttonState === 'PAUSED'
       })}>
         <header className='max-w-screen-xl p-4 md:px-0 m-0 m-auto w-full'>
-          <h1 className='text-white font-bold text-3xl md:text-5xl'>Reaction Test</h1>
+          <h1 className='text-white font-bold text-3xl md:text-5xl italic'>react-ion ⚡</h1>
         </header>
 
         <button
@@ -71,6 +75,7 @@ const App = (): JSX.Element => {
             {buttonState === 'PAUSED' && times.length !== 0 && (
               <span>{offset}ms or {millisecondsToSeconds(offset)} seconds</span>
             )}
+            <div className='my-2' />
             <span>{
               buttonState === 'PAUSED'
                 ? 'Press to start again.'
@@ -89,20 +94,41 @@ const App = (): JSX.Element => {
 
         <div className='my-3' />
 
-        <div className='m-0 m-auto bg-white p-4 rounded-md shadow-md max-w-screen-lg'>
+        <div className='m-0 m-auto bg-white p-4 rounded-md shadow-md max-w-screen-lg font-bold'>
           <div className='flex flex-row justify-center space-x-4'>
-            <div className='flex flex-col items-center'>
-              <span className='font-bold text-2xl'>{combo}</span>
-              <span className='font-bold text-gray-600'>COMBO</span>
+            <div className='flex flex-1 flex-col items-center bg-gray-100 p-2 rounded-md'>
+              <span className='text-2xl'>{combo}</span>
+              <span className='text-gray-600'>COMBO</span>
             </div>
-            <div className='flex flex-col items-center'>
-              <span className='font-bold text-2xl'>500ms</span>
-              <span className='font-bold text-gray-600'>FASTEST TIME</span>
+            <div className='flex flex-1 flex-col items-center p-2 bg-gray-100 rounded-md'>
+              <span className='text-2xl'>500ms</span>
+              <span className='text-gray-600'>FASTEST TIME</span>
+            </div>
+            <div className='flex flex-1 flex-col items-center p-2 bg-gray-100 rounded-md'>
+              <span className='text-2xl'>32ms</span>
+              <span className='text-gray-600'>AVERAGE</span>
             </div>
           </div>
+
+          <div className='my-3' />
+
+          <ul>
+            {times.map((time) => (
+              <li>{time}ms</li>
+            ))}
+          </ul>
+        </div>
+
+      </section>
+
+      <div className='my-5' />
+
+      <section className='px-4 md:px-0 m-0 m-auto max-w-screen-xl'>
+        <h2 className='font-bold text-3xl'>Ranking</h2>
+        <div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 
