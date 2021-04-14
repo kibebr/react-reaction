@@ -6,7 +6,8 @@ import React, {
 import { render } from 'react-dom'
 import {
   secondsToMilliseconds,
-  millisecondsToSeconds
+  millisecondsToSeconds,
+  getAverage
 } from './utils/Math'
 import { getRandomFromRange } from './utils/Random'
 import classNames from 'classnames'
@@ -21,8 +22,15 @@ type ButtonState
 const App = (): JSX.Element => {
   const [buttonState, setButtonState] = useState<ButtonState>('PAUSED')
   const [offset, setOffset] = useState<number>(0)
+  const [average, setAverage] = useState<number>(0)
   const [times, setTimes] = useState<number[]>([])
   const [combo, setCombo] = useState<number>(0)
+
+  useEffect((): void => {
+    if (times.length > 0) {
+      setAverage(getAverage(times))
+    }
+  }, [times])
 
   useEffect(() => {
     let timer: number | null = null
@@ -105,7 +113,7 @@ const App = (): JSX.Element => {
               <span className='text-gray-600'>FASTEST TIME</span>
             </div>
             <div className='flex flex-1 flex-col items-center p-2 bg-gray-100 rounded-md'>
-              <span className='text-2xl'>32ms</span>
+              <span className='text-2xl'>{average}ms</span>
               <span className='text-gray-600'>AVERAGE</span>
             </div>
           </div>
