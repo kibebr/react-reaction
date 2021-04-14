@@ -25,6 +25,7 @@ type ButtonState
 const App = (): JSX.Element => {
   const [buttonState, setButtonState] = useState<ButtonState>('PAUSED')
   const [offset, setOffset] = useState<number>(0)
+  const [fastestTime, setFastestTime] = useState<number>(0)
   const [average, setAverage] = useState<number>(0)
   const [times, setTimes] = useState<number[]>([])
   const [combo, setCombo] = useState<number>(0)
@@ -32,6 +33,7 @@ const App = (): JSX.Element => {
   useEffect((): void => {
     if (times.length > 0) {
       setAverage(getAverage(times))
+      setFastestTime(Math.min(...times))
     }
   }, [times])
 
@@ -131,7 +133,7 @@ const App = (): JSX.Element => {
               <span className='text-gray-600'>COMBO</span>
             </div>
             <div className='flex flex-1 flex-col items-center p-2 bg-gray-100 rounded-md'>
-              <span className='text-2xl'>500ms</span>
+              <span className='text-2xl'>{fastestTime}ms</span>
               <span className='text-gray-600'>FASTEST TIME</span>
             </div>
             <div className='flex flex-1 flex-col items-center p-2 bg-gray-100 rounded-md'>
