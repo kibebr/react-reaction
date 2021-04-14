@@ -56,11 +56,38 @@ const App = (): JSX.Element => {
       setTimes(times.concat(newOffset))
       setOffset(newOffset)
       setButtonState('PAUSED')
+      setCombo((c) => c + 1)
     } else if (buttonState === 'PAUSED') {
       setOffset(0)
       setButtonState('WAIT')
+    } else if (buttonState === 'WAIT') {
+      setCombo(0)
+      setButtonState('FAILURE')
     } else {
-      setButtonState('PAUSED')
+      setButtonState('WAIT')
+    }
+  }
+
+  const renderMessage = (state: ButtonState): JSX.Element => {
+    if (state === 'PRESS') {
+      return (
+        <div>Press!</div>
+      )
+    } else if (state === 'PAUSED') {
+      return (
+        <>
+          <span>{offset}ms or {millisecondsToSeconds(offset)} seconds</span>
+          <span className='text-xl'>Press to start again.</span>
+        </>
+      )
+    } else if (state === 'WAIT') {
+      return (
+        <div>Hold on.</div>
+      )
+    } else {
+      return (
+        <div>Too early.</div>
+      )
     }
   }
 
@@ -69,7 +96,8 @@ const App = (): JSX.Element => {
       <section className={classNames('flex flex-col h-auto', {
         'bg-green-500': buttonState === 'PRESS',
         'bg-yellow-500': buttonState === 'WAIT',
-        'bg-blue-500': buttonState === 'PAUSED'
+        'bg-blue-500': buttonState === 'PAUSED',
+        'bg-red-500': buttonState === 'FAILURE'
       })}>
         <header className='max-w-screen-xl p-4 md:px-0 m-0 m-auto w-full'>
           <h1 className='text-white font-bold text-3xl md:text-5xl italic'>react-ion ⚡</h1>
@@ -80,17 +108,7 @@ const App = (): JSX.Element => {
           onClick={onButtonClick}
         >
           <div className='flex flex-col text-white font-bold text-4xl'>
-            {buttonState === 'PAUSED' && times.length !== 0 && (
-              <span>{offset}ms or {millisecondsToSeconds(offset)} seconds</span>
-            )}
-            <div className='my-2' />
-            <span>{
-              buttonState === 'PAUSED'
-                ? 'Press to start again.'
-                : buttonState === 'PRESS'
-                  ? 'PRESS'
-                  : 'WAIT'
-              }</span>
+            {renderMessage(buttonState)}
           </div>
         </button>
       </section>
