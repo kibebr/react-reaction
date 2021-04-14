@@ -104,6 +104,7 @@ const App = (): JSX.Element => {
         'bg-blue-500': buttonState === 'PAUSED',
         'bg-red-500': buttonState === 'FAILURE'
       })}>
+
         <Header />
 
         <button
