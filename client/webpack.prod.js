@@ -53,7 +53,6 @@ module.exports = merge(common, {
         template: './src/index.html',
         minify: {
           removeComments: true,
-          removeEmptyElements: true,
           removeTagWhitespace: true,
           removeRedundantAttributes: true,
           collapseWhitespace: true
