@@ -1,15 +1,14 @@
-import { Action, Reducer } from 'redux'
+import {
+  createAction,
+  createReducer
+} from '@reduxjs/toolkit'
 
 // actions
-export const INCREMENT_COMBO: Action<string> = ({ type: 'INCREMENT' })
-export const RESET_COMBO: Action<string> = ({ type: 'RESET' })
+export const INCREMENT_COMBO = createAction('INCREMENT_COMBO')
+export const RESET_COMBO = createAction('RESET_COMBO')
 
 // reducers
-export const comboReducer: Reducer<number> = (state, action) => {
-  switch (action) {
-    case INCREMENT_COMBO:
-      return state as number + 1
-    default:
-      return 0
-  }
-}
+export const comboReducer = createReducer<number>(0, {
+  INCREMENT_COMBO: (x, _) => x + 1,
+  RESET_COMBO: (_) => 0
+})

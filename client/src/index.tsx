@@ -44,7 +44,7 @@ const App = (): JSX.Element => {
 
     if (buttonState === 'WAIT') {
       timer = window.setTimeout(() => {
-        dispatch(PRESS_BUTTON)
+        dispatch(PRESS_BUTTON())
       }, secondsToMilliseconds(getRandomFromRange(1, 5)))
     }
 
@@ -62,16 +62,16 @@ const App = (): JSX.Element => {
       const newOffset = offset + Date.now()
       dispatch(ADD_TIME(newOffset))
       setOffset(newOffset)
-      dispatch(PAUSE_BUTTON)
-      dispatch(INCREMENT_COMBO)
+      dispatch(PAUSE_BUTTON())
+      dispatch(INCREMENT_COMBO())
     } else if (buttonState === 'PAUSED') {
       setOffset(0)
-      dispatch(WAIT_BUTTON)
+      dispatch(WAIT_BUTTON())
     } else if (buttonState === 'WAIT') {
-      dispatch(RESET_COMBO)
-      dispatch(FAIL_BUTTON)
+      dispatch(RESET_COMBO())
+      dispatch(FAIL_BUTTON())
     } else {
-      dispatch(WAIT_BUTTON)
+      dispatch(WAIT_BUTTON())
     }
   }
 

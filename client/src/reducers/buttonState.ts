@@ -1,4 +1,7 @@
-import { Action, Reducer } from 'redux'
+import {
+  createAction,
+  createReducer
+} from '@reduxjs/toolkit'
 
 export type ButtonState
   = 'PRESS'
@@ -6,22 +9,14 @@ export type ButtonState
   | 'FAILURE'
   | 'WAIT'
 
-export const PRESS_BUTTON: Action<string> = ({ type: 'PRESS_BUTTON' })
-export const PAUSE_BUTTON: Action<string> = ({ type: 'PAUSE_BUTTON' })
-export const FAIL_BUTTON: Action<string> = ({ type: 'FAIL_BUTTON' })
-export const WAIT_BUTTON: Action<string> = ({ type: 'WAIT_BUTTON' })
+export const PRESS_BUTTON = createAction('PRESS_BUTTON')
+export const PAUSE_BUTTON = createAction('PAUSE_BUTTON')
+export const FAIL_BUTTON = createAction('FAIL_BUTTON')
+export const WAIT_BUTTON = createAction('WAIT_BUTTON')
 
-export const buttonStateReducer: Reducer<ButtonState> = (_, action) => {
-  switch (action) {
-    case PRESS_BUTTON:
-      return 'PRESS'
-    case FAIL_BUTTON:
-      return 'FAILURE'
-    case WAIT_BUTTON:
-      return 'WAIT'
-    case PAUSE_BUTTON:
-      return 'PAUSED'
-    default:
-      return 'PAUSED'
-  }
-}
+export const buttonStateReducer = createReducer<ButtonState>('PAUSED', {
+  PRESS_BUTTON: (_) => 'PRESS',
+  FAIL_BUTTON: (_) => 'FAILURE',
+  WAIT_BUTTON: (_) => 'WAIT',
+  PAUSE_BUTTON: (_) => 'PAUSED'
+})
